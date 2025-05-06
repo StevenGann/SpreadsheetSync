@@ -1,94 +1,93 @@
-# Obsidian Sample Plugin
+# Obsidian Spreadsheet Sync Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+This plugin allows you to display parts of Excel, CSV, and other spreadsheet files directly in your Obsidian notes. It supports XLSX, XLS, and CSV files, and allows you to specify which cells to display using standard Excel range notation.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## Features
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+- Display spreadsheet data as tables in your notes
+- Support for XLSX, XLS, and CSV files
+- Specify cell ranges using standard Excel notation (e.g., A1:B2)
+- Support for named sheets in Excel files
+- Relative file paths from your notes
 
-## First time developing plugins?
+## Usage
 
-Quick starting guide for new plugin devs:
+Add a code block to your note with the `spreadsheet` language identifier, followed by the filename and cell range:
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+    ```spreadsheet
+    example.xlsx(A1:B2)
+    ```
 
-## Releasing new releases
+To specify a particular sheet in an Excel file:
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+    ```spreadsheet
+    example.xlsx(Sheet2!A1:B2)
+    ```
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+The plugin will look for the spreadsheet file in the same directory as your note. You can also use relative paths:
 
-## Adding your plugin to the community plugin list
+    ```spreadsheet
+    ../data/example.xlsx(A1:B2)
+    ```
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+## Installation
 
-## How to use
+### Using BRAT (Recommended)
 
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
+1. Install the [BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin in Obsidian
+2. Open BRAT settings
+3. Click "Add Beta plugin"
+4. Enter the repository URL: `https://github.com/YOUR_GITHUB_USERNAME/SpreadsheetSync`
+5. Enable the "Spreadsheet Sync" plugin in Obsidian's Community Plugins settings
 
-## Manually installing the plugin
+### Manual Installation
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+1. Download the latest release
+2. Extract the files into your vault's `.obsidian/plugins/obsidian-spreadsheet-sync/` directory
+3. Enable the plugin in Obsidian's Community Plugins settings
 
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
+## Examples
 
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
+### Basic Example
+```spreadsheet
+data.xlsx(A1:B5)
 ```
+This will display cells A1 through B5 from the first sheet of `data.xlsx`.
 
-If you have multiple URLs, you can also do:
-
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
+### Specific Sheet Example
+```spreadsheet
+budget.xlsx(Monthly!A1:D10)
 ```
+This will display cells A1 through D10 from the "Monthly" sheet of `budget.xlsx`.
 
-## API Documentation
+### CSV Example
+```spreadsheet
+data.csv(A1:C10)
+```
+This will display the specified range from a CSV file.
 
-See https://github.com/obsidianmd/obsidian-api
+## Troubleshooting
+
+### File Not Found
+- Make sure the spreadsheet file is in the same directory as your note, or that the relative path is correct
+- Check that the filename matches exactly (case-sensitive on some systems)
+- Verify that the file extension is correct (.xlsx, .xls, or .csv)
+
+### Invalid Range
+- Ensure the range follows Excel notation (e.g., A1:B2)
+- For specific sheets, use the format SheetName!A1:B2
+- Check that the specified sheet exists in your Excel file
+
+## Support
+
+If you encounter any issues or have feature requests, please:
+1. Check the [GitHub Issues](https://github.com/YOUR_GITHUB_USERNAME/SpreadsheetSync/issues) for existing reports
+2. Create a new issue if needed, including:
+   - A description of the problem
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Sample files (if possible)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
