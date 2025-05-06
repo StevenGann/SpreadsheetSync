@@ -37,7 +37,7 @@ The plugin will look for the spreadsheet file in the same directory as your note
 1. Install the [BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin in Obsidian
 2. Open BRAT settings
 3. Click "Add Beta plugin"
-4. Enter the repository URL: `https://github.com/YOUR_GITHUB_USERNAME/SpreadsheetSync`
+4. Enter the repository URL: `https://github.com/StevenGann/SpreadsheetSync`
 5. Enable the "Spreadsheet Sync" plugin in Obsidian's Community Plugins settings
 
 ### Manual Installation
