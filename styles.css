@@ -6,3 +6,33 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
+
+.spreadsheet-table {
+    border-collapse: collapse;
+    margin: 1em 0;
+    width: 100%;
+}
+
+.spreadsheet-table th,
+.spreadsheet-table td {
+    border: 1px solid var(--background-modifier-border);
+    padding: 6px 13px;
+}
+
+.spreadsheet-table th {
+    background-color: var(--background-modifier-hover);
+    font-weight: bold;
+}
+
+.spreadsheet-table tr:nth-child(2n) {
+    background-color: var(--background-secondary);
+}
+
+.spreadsheet-error {
+    color: var(--text-error);
+    padding: 1em;
+    border: 1px solid var(--background-modifier-error);
+    border-radius: 4px;
+    margin: 1em 0;
+    background-color: var(--background-modifier-error-hover);
+}
